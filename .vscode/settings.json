@@ -18,6 +18,11 @@
             "depth": 3,
             "includeAllSymbols": true
         },
+        {
+            "name": "sqlalchemy", //here is the library you need
+            "depth": 2,
+            "includeAllSymbols": true
+        },
         //like this:
         // {
         //     "name": "django",

@@ -1,5 +1,3 @@
-
-from tkinter import NO
 from aiogram import F, Router, types
 from aiogram.filters import Command, StateFilter
 from aiogram.fsm.context import FSMContext
@@ -40,6 +38,7 @@ async def change_product(message: types.Message):
 
 @admin_router.message(F.text == "Удалить товар")
 async def delete_product(message: types.Message):
+    
     await message.answer("Выберите товар(ы) для удаления")
 
 
@@ -60,7 +59,7 @@ class AddProduct(StatesGroup):
 
 
 @admin_router.message(StateFilter(None), F.text == "Добавить товар")
-async def add_product(message: types.Message, state: FSMContext):
+async def add_product_(message: types.Message, state: FSMContext):
     await message.answer(
         "Введите название товара", reply_markup=types.ReplyKeyboardRemove()
     )
@@ -79,7 +78,7 @@ async def cancel_handler(message: types.Message, state: FSMContext) -> None:
 
 @admin_router.message(StateFilter('*'), Command("назад"))
 @admin_router.message(StateFilter('*'), F.text.casefold() == "назад")
-async def cancel_handler(message: types.Message, state: FSMContext) -> None:
+async def cancel_handler_(message: types.Message, state: FSMContext) -> None:
     current_state = await state.get_state()
     if current_state == AddProduct.name:
         await message.answer('Предыдущего шага нет, или введите название товара или введите отмена!')
@@ -103,7 +102,7 @@ async def add_name(message: types.Message, state: FSMContext):
 
 #если пользователь ввел что то не то, что то отличное от текста
 @admin_router.message(AddProduct.name)
-async def add_name(message: types.Message, state: FSMContext):
+async def add_name_(message: types.Message, state: FSMContext):
     await message.answer("Вы ввели недопустимые данные, введите текст описания товара")
 
 @admin_router.message(AddProduct.description, F.text)
